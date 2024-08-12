@@ -31,5 +31,6 @@ document.body.appendChild(tmpElm);
 
 const width = tmpElm.offsetWidth;
 document.body.removeChild(tmpElm);
-indicator.style.width = width + 'px';
+let offsetPx = 14;
+indicator.style.width = (width + offsetPx) + 'px';
 indicator.textContent = msg;
