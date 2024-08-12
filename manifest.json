@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "author": "ykamenashi",
+    "homepage_url": "https://github.com/ykamenashi/chrome-ex-my-title-tag",
+    "name": "my title tag",
+    "description": "alternative of 'show title tag' addon",
+    "version": "1.0",
+    "icons": {
+    },
+    "background": {
+    },
+    "action": {
+    },
+    "permissions": [
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": [
+                "script.js"
+            ]
+        }
+    ]
+}
