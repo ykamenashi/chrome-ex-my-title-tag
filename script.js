@@ -1,5 +1,6 @@
 let msg = document.title;
 
+/// set up style of page title indicator
 let indicator = document.createElement('div');
 indicator.style.position = 'fixed';
 indicator.style.bottom = 0;
@@ -12,17 +13,25 @@ indicator.style.height = '25px';
 indicator.style.width = '100px';
 indicator.style.paddingLeft = '4px';
 
+/*
 indicator.addEventListener('mouseover', (ev)=>{
   let elm = ev.target;
   elm.style.opacity = 0;
 });
 indicator.addEventListener('mouseout', (ev)=>{
   let elm = ev.target;
-  
   elm.style.opacity = 100;
+});
+*/
+
+/// Hide on double click
+indicator.addEventListener('dblclick', (ev)=>{
+  let elm = ev.target;
+  elm.style.display = 'none';
 });
 document.body.appendChild(indicator);
 
+/// treat multi-byte characters length with box
 let tmpElm = document.createElement('span');
 tmpElm.style.visibility = 'hidden';
 tmpElm.style.whiteSpace = 'pre';
@@ -34,3 +43,5 @@ document.body.removeChild(tmpElm);
 let offsetPx = 14;
 indicator.style.width = (width + offsetPx) + 'px';
 indicator.textContent = msg;
+
+/// end of code
