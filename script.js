@@ -1,9 +1,28 @@
 const textOffsetPixel = 14;
+let timeout1;
+let timeout2;
+
+// 除外リストで定義されたURLでは、動作せずreturnする
+chrome.storage.sync.get( {exclude_urls: '' }, (result)=>{
+  if( result.exclude_urls != '' ){
+    const urls = result.exclude_urls.split('\n');
+    for(let i=0,max=urls.length; i<max; i++){
+      if( urls[i] == '') continue;
+      let regex = new RegExp(urls[i]);
+      if(regex.test(location.href)){
+        return;
+      }
+    }
+  }
+  // 動的にTITLEを更新するサイト対策で、遅延処理する
+  timeout1 = window.setTimeout(mtt, 1000);
+  timeout2 = window.setTimeout(watchTitleTag, 1200);
+});
 
 const mtt = () => {
   let msg = document.title;
 
-  /// set up style of page title indicator
+  // インジケーターの書式を設定する
   let indicator = document.createElement('div');
   indicator.style.position = 'fixed';
   indicator.style.bottom = 0;
@@ -17,7 +36,7 @@ const mtt = () => {
   indicator.style.width = '100px';
   indicator.style.paddingLeft = '4px';
 
-  /// Hide on double click
+  // ダブルクリックで消す
   indicator.addEventListener('dblclick', (ev)=>{
     let elm = ev.target;
     elm.style.display = 'none';
@@ -29,8 +48,7 @@ const mtt = () => {
   indicator.textContent = msg;
 }
 
-const timeout = window.setTimeout(mtt, 1000);
-
+// SPAで動的に書き換えられたTITLEを追跡する
 const watchTitleTag = () => {
   const target = document.querySelector('title');
   const observer = new MutationObserver((mutations) => {
@@ -42,9 +60,8 @@ const watchTitleTag = () => {
   observer.observe(target, config);
 }
 
-const timeout2 = window.setTimeout(watchTitleTag, 1200);
 
-/// treat multi-byte characters length with box
+// マルチバイト文字の長さを再計算して要素に適用する
 const calcTitleWidth = () => {
   const msg = document.title;
   const tmpElm = document.createElement('span');
