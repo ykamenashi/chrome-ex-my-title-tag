@@ -12,6 +12,7 @@
     "action": {
     },
     "permissions": [
+        "storage"
     ],
     "host_permissions": [
         "http://*/*",
@@ -24,5 +25,6 @@
                 "script.js"
             ]
         }
-    ]
+    ],
+    "options_page": "config_panel.html"
 }
